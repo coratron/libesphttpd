@@ -332,7 +332,7 @@ static void wifi_scan_done(wifi_event_sta_scan_done_t *event)
     if (event->status != ESP_OK)
     {
         ESP_LOGI(TAG, "Scan failed. Event status: 0x%x",
-                 event->status);
+                 (unsigned int) event->status);
         goto err_out;
     }
 
@@ -594,8 +594,8 @@ CgiStatus cgiWiFiScan(HttpdConnData *connData)
                 cJSON *jsAp = cJSON_CreateObject();
                 char buff[32];
                 cJSON_AddStringToObject(jsAp, "essid", (char *)record->ssid);
-                snprintf((char *)buff, sizeof(buff), MACSTR, MAC2STR(record->bssid)); // convert MAC to string
-                cJSON_AddStringToObject(jsAp, "bssid", buff);
+                // snprintf((char *)buff, sizeof(buff), MACSTR, MAC2STR(record->bssid)); // convert MAC to string
+                // cJSON_AddStringToObject(jsAp, "bssid", buff);
                 cJSON_AddNumberToObject(jsAp, "rssi", record->rssi);
                 cJSON_AddNumberToObject(jsAp, "enc", record->authmode);
                 cJSON_AddNumberToObject(jsAp, "channel", record->primary);
@@ -971,7 +971,7 @@ err_out:
     }
 
     ESP_LOGD(TAG, "[%s] Leaving. State: %s delay: %d",
-             __FUNCTION__, state_names[cfg_state.state], delay);
+             __FUNCTION__, state_names[cfg_state.state], (int) delay);
 
     xSemaphoreGive(cfg_state.lock);
     return;

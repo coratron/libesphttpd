@@ -214,7 +214,7 @@ CgiStatus ICACHE_FLASH_ATTR cgiEspVfsTemplate(HttpdConnData *connData) {
 	int x, sp=0;
 	char *e=NULL;
 	char buff[FILE_CHUNK_LEN +1];
-	char filename[MAX_FILENAME_LENGTH + 1];
+	char filename[MAX_FILENAME_LENGTH + 1] = "";
 
 
 	if (connData->isConnectionClosed) {

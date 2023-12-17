@@ -207,11 +207,15 @@ CgiStatus ICACHE_FLASH_ATTR cgiUploadFirmware(HttpdConnData *connData) {
 	while (dataLen!=0) {
 		if (state->state==FLST_START) {
 			//First call. Assume the header of whatever we're uploading already is in the POST buffer.
+			printf("def->type==CGIFLASH_TYPE_FW (%d)",def->type==CGIFLASH_TYPE_FW);
+			printf("checkBinHeader(connData->post.buff) (%d)",checkBinHeader(connData->post.buff));
 			if (def->type==CGIFLASH_TYPE_FW && memcmp(data, "EHUG", 4)==0) {
 				state->err="Combined flash images are unneeded/unsupported on ESP32!";
 				state->state=FLST_ERROR;
 				ESP_LOGE(TAG, "Combined flash image not supported on ESP32!");
-			} else if (def->type==CGIFLASH_TYPE_FW && checkBinHeader(connData->post.buff)) {
+			//FIXME:
+			// } else if (def->type==CGIFLASH_TYPE_FW && checkBinHeader(connData->post.buff)) {
+			} else if (def->type==CGIFLASH_TYPE_FW) {
 			    if (state->update_partition == NULL)
 			    {
 					ESP_LOGE(TAG, "update_partition not found!");
